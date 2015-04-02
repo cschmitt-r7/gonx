@@ -19,6 +19,14 @@ func NewReader(logFile io.Reader, format string) *Reader {
 	}
 }
 
+// Create a reader for a custom log format without the automagical regex building
+func NewReaderRegex(logFile io.Reader, format string) *Reader {
+	return &Reader{
+		file:   logFile,
+		parser: NewParserRegex(format),
+	}
+}
+
 // Creates reader for nginx log format. Nginx config parser will be used
 // to get particular format from the conf file.
 func NewNginxReader(logFile io.Reader, nginxConf io.Reader, formatName string) (reader *Reader, err error) {
